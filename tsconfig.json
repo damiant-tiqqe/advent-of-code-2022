@@ -1,0 +1,30 @@
+{
+  "compileOnSave": false,
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".serverless",
+    "temp",
+  ],
+  "compilerOptions": {
+    "allowJs": true,
+    "outDir": "./dist",
+    "sourceMap": true,
+    "module": "commonjs",
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es6",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom",
+      "esnext"
+    ],
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  }
+}
