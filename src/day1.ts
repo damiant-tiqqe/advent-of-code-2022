@@ -1,4 +1,4 @@
-import { readDataFile, sortArray, SORTORDER } from './util';
+import { readDataFile, sortArray, SORTORDER, sumArray } from './util';
 
 
 
@@ -54,10 +54,6 @@ export const getTotalCaloriesCarried = (elvesBackpacks: number[][]) => {
         totals[i] = sumArray(elvesBackpacks[i]);
     }
     return totals;
-}
-
-export const sumArray = (arrayToSum: number[]) => {
-    return arrayToSum.reduce((partialSum, a) => partialSum + a, 0);
 }
 
 

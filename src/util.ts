@@ -37,3 +37,23 @@ export const readDataFile = (filename: string) => {
     
     return arr;
 }
+
+export function splitStringInHalf(testString: string): string[] {
+    const halfPoint: number = testString.length / 2;
+    const splitString: string[] = [
+        testString.substring(0, halfPoint),
+        testString.substring(halfPoint, testString.length)
+    ];
+    return splitString;
+}
+export function toCharArray(source: string): string[] {
+    return new Array(...source);
+}
+
+export const sumArray = (arrayToSum: number[]) => {
+    return arrayToSum.reduce((partialSum, a) => partialSum + a, 0);
+}
+
+export const getUniqueStrings = (input: string[]): string[] => {
+    return [... new Set(input)];
+}

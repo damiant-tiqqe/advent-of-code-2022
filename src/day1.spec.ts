@@ -62,28 +62,6 @@ describe(`Advent of Code 2022 - Day 1`, async () => {
 
     });
 
-    it.skip(`should find the largest from the real data`, async () => {
-        const expected = 71471;
-        const data = readDataFile('data/day1/data.txt'); // data\day1\data-test.txt // ../data/day1/data-test.txt
-        const backpacks = Day1.convertRawDataToElfArray(data);
-        const totals = Day1.getTotalCaloriesCarried(backpacks);
-        let largest = 0;
-        let largestIndex = 0;
-        for(let i = 0; i < totals.length; i++) {
-            if (totals[i] > largest) {
-                largest = totals[i];
-                largestIndex = i;
-            }
-            else if (totals[i] === largest) {
-                console.log(`index: ${i} equals current largest: ${i}:${largest}`);
-            }
-        }
-
-        console.log(`largest found is ${largestIndex}:${largest}`);
-
-        assert.strictEqual(largest, expected);
-    });
-
     it(`should get the top 3 elves in order of calories carried`, async () => {
         Day1.getLargestCarriedCalories(expectedTotals, 3);
     });

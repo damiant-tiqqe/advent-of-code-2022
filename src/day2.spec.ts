@@ -3,7 +3,7 @@ import { assert } from 'chai'
 import { convertRawDataToLiteralStrategy, convertStrategyToDesiredOutcome, getResponseForDesiredOutcome, getRoundResult, Me, Opponent, RoundOutcome, playStrategy, scoreRound, StrategyOutcome } from '../src/day2';
 //import { readDataFile } from '../src/util';
 
-describe(`Advent of Code 2022 - Day 1`, async () => {
+describe(`Advent of Code 2022 - Day 2`, async () => {
 
     const rawData = [
         'A X',
@@ -85,7 +85,7 @@ describe(`Advent of Code 2022 - Day 1`, async () => {
         assert.strictEqual(response, Me.Paper);
     });
    
-    it.only(`should play the sample strategies and score 12 points`, async () => {
+    it(`should play the sample strategies and score 12 points`, async () => {
         const expectedScore = 12;
         const gamesToPlay = [
             { opponent: Opponent.Rock, desiredOutcome: StrategyOutcome.Draw },
