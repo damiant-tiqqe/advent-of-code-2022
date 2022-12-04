@@ -1,6 +1,8 @@
 import * as Util from './util';
 
 export const run = () => {
+    console.log(`----------- Day 3 -----------`);
+
     const data = Util.readDataFile('data/day3/data.txt');
 
     const priorities = [];

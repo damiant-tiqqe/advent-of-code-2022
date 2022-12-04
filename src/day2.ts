@@ -54,6 +54,8 @@ export const DesiredOutcome = [
 ]
 
 export const run = () => {
+    console.log(`----------- Day 2 -----------`);
+
     const data = readDataFile('data/day2/data.txt');
     const strategy = convertRawDataToLiteralStrategy(data);
     const result = playStrategy(strategy);

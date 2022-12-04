@@ -3,6 +3,8 @@ import { readDataFile, sortArray, SORTORDER, sumArray } from './util';
 
 
 export const run = () => {
+    console.log(`----------- Day 1 -----------`);
+
     const data = readDataFile('data/day1/data.txt');
     const backpacks = convertRawDataToElfArray(data);
     const backpackTotals = getTotalCaloriesCarried(backpacks);
