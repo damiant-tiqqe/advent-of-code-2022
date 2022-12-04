@@ -4,6 +4,7 @@ export interface SectionPairData {
     raw: string;
     arrays: SectionData;
     contained: boolean;
+    overlap: boolean;
 }
 export interface SectionData {
     array1: number[];
@@ -14,6 +15,15 @@ export const run = () => {
     console.log(`----------- Day 4 -----------`);
     const data = readDataFile('data/day4/data.txt');
 
+    const parsedData: SectionPairData[] = convertSectionData(data);
+
+    console.log(`Part 1: Total contained arrays: ${parsedData.filter(x => x.contained).length}`);
+
+    console.log(`Part 2: Total overlapping arrays: ${parsedData.filter(x => x.overlap).length}`);
+   
+}
+
+export function convertSectionData(data: string[]) {
     const parsedData: SectionPairData[] = [];
     for (let i = 0; i < data.length; i++) {
         const element = data[i];
@@ -22,14 +32,18 @@ export const run = () => {
         }
         const sectionData: SectionData = convertRawDataLine(element);
         const areContained = isRedundantArrays(sectionData.array1, sectionData.array2);
+        const areOverlapping = isPartialOverlap(sectionData.array1, sectionData.array2);
 
-        parsedData.push({ raw: element, arrays: sectionData, contained: areContained} as SectionPairData)
-  
+        parsedData.push(
+            { 
+                raw: element, 
+                arrays: sectionData, 
+                contained: areContained,
+                overlap: areOverlapping
+            } as SectionPairData);
+
     }
-
-    console.log(`Part 1: Total contained arrays: ${parsedData.filter(x => x.contained).length}`);
-
-    
+    return parsedData;
 }
 
 export function getNumberArray(startNum: number, endNum: number): number[] {
@@ -59,5 +73,14 @@ export function convertRawDataLine(rawData: string): SectionData {
     }
 
     return { array1: arrays[0], array2: arrays[1] } as SectionData;
+}
+
+export function isPartialOverlap(array1: number[], array2: number[]): boolean {
+    const intersect1 = array1.filter(x => array2.includes(x));
+    const isContained1 = array1.some(x=> intersect1.includes(x));
+    const intersect2 = array2.filter(x => array1.includes(x));
+    const isContained2 = array2.some(x=> intersect2.includes(x));
+   
+    return isContained1 || isContained2;
 }
 
