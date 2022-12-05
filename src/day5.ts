@@ -70,6 +70,11 @@ export const run = () => {
 
 }
 
+/**
+ * Convert string array of cargo data rows into cleaned arrays of cargo item rows
+ * @param dataRaw string array with the raw cargo data rows in string format
+ * @returns multidimension string array with the cargo stacks in individual arrays
+ */
 export const parseRawData = (dataRaw: string[]): CargoData => {
     let state = ReadState.structure;
     const data: CargoData = { instructionsRaw: [], instructions: [], structure: [], structureRaw: [] };
@@ -100,6 +105,11 @@ export const parseRawData = (dataRaw: string[]): CargoData => {
     return data;
 }
 
+/**
+ * Convert string representation of a row from the stacks into "item" array for that row
+ * @param layout string representation of the cargo stacks row in format '[B] [C] [D]'
+ * @returns string array of the row items, cleaned eg [ 'B', 'C', 'D' ]
+ */
 export const layoutLineToArray = (layout: string) => {
     const containerArray: string[] = [];
 
@@ -119,7 +129,11 @@ export function getStackCountFromLayoutString(layout: string): number {
     return (layout.length + 1) / 4;
 }
 
-
+/**
+ * Convert instruction text into Instruction object
+ * @param instruction raw instruction text
+ * @returns Instruction object
+ */
 export function convertInstructionString(instruction: string): Instruction {
     const regexInstruction: RegExp = /move (?<move>\d+) from (?<from>\d+) to (?<to>\d+)/gm;
     let [, move, from, to] = regexInstruction.exec(instruction) || [];
