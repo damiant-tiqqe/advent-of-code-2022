@@ -3,7 +3,6 @@ import {cloneDeep} from 'lodash';
 
 const regexLayout: RegExp = /\[\w\]\s?|\s{4}|\s{3}$/gm;
 const regexName: RegExp = /\[(?<name>\w)\]/;
-//const regexStructureEnd: RegExp = / 1   2   3   4   5   6   7   8   9 /;
 
 export interface CargoData {
     structureRaw: string[][];
@@ -115,13 +114,10 @@ export const layoutLineToArray = (layout: string) => {
 
     let arr;
     while ((arr = regexLayout.exec(layout)) !== null) {
-        //console.log(`Found ${arr[0]}, indexed at ${regexLayout.lastIndex}.`);
         let [, name] = regexName.exec(arr[0]) || [];
-        //console.log(name);
         containerArray.push(name);
     }      
 
-    //console.log(containerArray);
     return containerArray;
 }
 
@@ -185,8 +181,6 @@ export function createStructureFromContainerArray(containerArray: any[]) {
 }
 export function executeInstruction(structure: string[][], instruction: Instruction, moveMode: MoveMode = MoveMode.single): string[][] {
     // lets make it immutable
-    //const newStructure = [...structure];
-    //const newStructure = Object.assign(Object.create(Object.getPrototypeOf(structure)), structure);
     const newStructure = cloneDeep(structure);
 
     switch(moveMode as MoveMode) {
@@ -205,7 +199,6 @@ function moveInstructionSingle(instruction: Instruction, structure: string[][]):
     for (let i = 0; i < instruction.move; i++) {
         const value = structure[fromIndex].pop();
         if (!value) {
-            //throw new Error('something went wrong. no crate to move...');
             console.log(`cannot move crate from '${instruction.from}' to '${instruction.to}' as the stack is empty`);
             continue;
         }
