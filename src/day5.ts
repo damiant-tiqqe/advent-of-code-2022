@@ -14,8 +14,6 @@ export interface CargoData {
 
 export enum ReadState {
     structure,
-    layoutheader, 
-    spacer,
     instructions
 }
 
@@ -44,8 +42,7 @@ export const run = () => {
 
     let topCrates: string[] = [];
     for (let i = 0; i < structure.length; i++) {
-        //const element = structure[i];
-;
+
         if (structure[i] && structure[i].length) {
             topCrates.push(structure[i][structure[i].length - 1]);
         }
@@ -53,7 +50,23 @@ export const run = () => {
     
     console.log(`Part 1: Top crates in the stacks: ${topCrates.join('')}`);
 
-    console.log(`Part 2: UNKNOWN: ${''}`);
+
+    // process instructions;
+    let structure2 = cloneDeep(data.structure);
+    for (let i = 0; i < data.instructions.length; i++) {
+        const instruction = data.instructions[i];
+
+        structure2 = executeInstruction(structure2, instruction, MoveMode.multiple);
+    }
+
+    let topCrates2: string[] = [];
+    for (let i = 0; i < structure2.length; i++) {
+
+        if (structure2[i] && structure2[i].length) {
+            topCrates2.push(structure2[i][structure2[i].length - 1]);
+        }
+    }
+    console.log(`Part 2: Top crates in the stacks: ${topCrates2.join('')}`);
 
 }
 
@@ -68,21 +81,13 @@ export const parseRawData = (dataRaw: string[]): CargoData => {
                 // check data is still valid
                 if (element.match(regexLayout)) {
                     // process layout
-                    //const stackCount: number = getStackCountFromLayoutString(element);
                     const layoutArray: string[] = layoutLineToArray(element);
                     data.structureRaw.push(layoutArray);
-                    //console.log(layoutArray);
                 }
-                else { //if (element.match(regexStructureEnd)) {
+                else {
                     state = ReadState.instructions;
                 }
                 break;
-            // case ReadState.layoutheader:
-            //     state = ReadState.spacer;
-            //     break;
-            // case ReadState.spacer:
-            //     state = ReadState.instructions;
-            //     break;
             case ReadState.instructions:
                 const regexInstruction: RegExp = /move (?<move>\d+) from (?<from>\d+) to (?<to>\d+)/gm;
                 if (element.match(regexInstruction)) {
@@ -164,26 +169,44 @@ export function createStructureFromContainerArray(containerArray: any[]) {
 
     return stacks;
 }
-export function executeInstruction(structure: string[][], instruction: Instruction, moveMode: MoveMode = MoveMode.single) {
+export function executeInstruction(structure: string[][], instruction: Instruction, moveMode: MoveMode = MoveMode.single): string[][] {
     // lets make it immutable
     //const newStructure = [...structure];
     //const newStructure = Object.assign(Object.create(Object.getPrototypeOf(structure)), structure);
     const newStructure = cloneDeep(structure);
 
+    switch(moveMode as MoveMode) {
+        case MoveMode.single:
+            return moveInstructionSingle(instruction, newStructure);
+        case MoveMode.multiple:
+            return moveInstructionMultiple(instruction, newStructure);
+        default:
+            throw new Error(`unknown move mode ${moveMode}`);
+    }
+}
+
+function moveInstructionSingle(instruction: Instruction, structure: string[][]): string[][] {
     const fromIndex = instruction.from - 1;
     const toIndex = instruction.to - 1;
     for (let i = 0; i < instruction.move; i++) {
-        const value = newStructure[fromIndex].pop();
+        const value = structure[fromIndex].pop();
         if (!value) {
             //throw new Error('something went wrong. no crate to move...');
             console.log(`cannot move crate from '${instruction.from}' to '${instruction.to}' as the stack is empty`);
             continue;
         }
-        
-        newStructure[toIndex].push(value);          
+
+        structure[toIndex].push(value);
     }
-    
-    return newStructure;
+    return structure;
+}
+
+function moveInstructionMultiple(instruction: Instruction, structure: string[][]): string[][] {
+    const fromIndex = instruction.from - 1;
+    const toIndex = instruction.to - 1;
+    const itemsToMove = structure[fromIndex].splice(-1 * instruction.move, instruction.move);
+    structure[toIndex].push(...itemsToMove);
+    return structure;
 }
 
 function createInstructionsFromInstructionArray(instructionsRaw: string[]): Instruction[] {

@@ -88,7 +88,7 @@ describe(`should convert layout string to data array`, async () => {
 
     });
 
-    it.only(`parse raw data`, async () => {
+    it(`parse raw data`, async () => {
         const layout = [
             '[A]        ',
             '[B] [C] [D]',
@@ -104,7 +104,35 @@ describe(`should convert layout string to data array`, async () => {
                 ['A', undefined, undefined],
                 ['B', 'C', 'D'],
                 ['E', 'F', 'G']
-            ]
+            ],
+            instructions: [],
+            structure: []
+       } as Day5.CargoData
+        
+        const result = Day5.parseRawData(layout);
+        assert.deepEqual(result, expected);
+
+    });
+
+    it(`parse raw data`, async () => {
+        const layout = [
+            '[A]        ',
+            '[B] [C] [D]',
+            '[E] [F] [G]',
+            ' 1   2   3 ',
+            '',
+            'move 1 from 1 to 3'
+        ];
+
+        const expected = {
+            instructionsRaw:  [ 'move 1 from 1 to 3' ],
+            structureRaw: [
+                ['A', undefined, undefined],
+                ['B', 'C', 'D'],
+                ['E', 'F', 'G']
+            ],
+            instructions: [],
+            structure: []
         } as Day5.CargoData
         
         const result = Day5.parseRawData(layout);
@@ -112,26 +140,35 @@ describe(`should convert layout string to data array`, async () => {
 
     });
 
-    it.only(`parse raw data`, async () => {
-        const layout = [
-            '[A]        ',
-            '[B] [C] [D]',
-            '[E] [F] [G]',
-            ' 1   2   3 ',
-            '',
-            'move 1 from 1 to 3'
+    it(`should move 1 item at a time for 2 moves in Single Move mode`, async () => {
+        const structure = [
+            ['A'],
+            ['B', 'C', 'D']
+        ];
+        const instruction: Day5.Instruction = { move: 2, from: 2, to: 1 };
+        const expected = [
+            ['A', 'D', 'C'],
+            ['B']
         ];
 
-        const expected = {
-            instructionsRaw:  [ 'move 1 from 1 to 3' ],
-            structureRaw: [
-                ['A', undefined, undefined],
-                ['B', 'C', 'D'],
-                ['E', 'F', 'G']
-            ]
-        } as Day5.CargoData
-        
-        const result = Day5.parseRawData(layout);
+        const result = Day5.executeInstruction(structure, instruction, Day5.MoveMode.single);
+
+        assert.deepEqual(result, expected);
+
+    });
+    it(`should move all items at once for 2 moves in Multiple Move mode`, async () => {
+        const structure = [
+            ['A'],
+            ['B', 'C', 'D']
+        ];
+        const instruction: Day5.Instruction = { move: 2, from: 2, to: 1 };
+        const expected = [
+            ['A', 'C', 'D'],
+            ['B']
+        ];
+
+        const result = Day5.executeInstruction(structure, instruction, Day5.MoveMode.multiple);
+
         assert.deepEqual(result, expected);
 
     });
