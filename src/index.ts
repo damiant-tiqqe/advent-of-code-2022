@@ -3,6 +3,7 @@ import * as Day2 from './day2'
 import * as Day3 from './day3'
 import * as Day4 from './day4'
 import * as Day5 from './day5'
+import * as Day6 from './day6'
 
 Day1.run();
 
@@ -13,3 +14,5 @@ Day3.run();
 Day4.run();
 
 Day5.run();
+
+Day6.run();

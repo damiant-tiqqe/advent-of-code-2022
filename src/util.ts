@@ -28,13 +28,9 @@ export const sortArrayDesc = (a,b) => {
     return b - a;
 }
 
-export const readDataFile = (filename: string) => {
+export const readDataFile = (filename: string): string[] => {
     const contents = readFileSync(filename, 'utf-8');
-
-    const arr = contents.split(/\r?\n/);
-  
-    //console.log(arr); // 👉️ ['One', 'Two', 'Three', 'Four']
-    
+    const arr = contents.split(/\r?\n/); 
     return arr;
 }
 
