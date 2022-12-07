@@ -53,3 +53,10 @@ export const sumArray = (arrayToSum: number[]) => {
 export const getUniqueStrings = (input: string[]): string[] => {
     return [... new Set(input)];
 }
+
+export const peek = (arr: any[]) => {
+    if (arr && arr.length) {
+        return arr[arr.length - 1];
+    }
+    return undefined;
+}
