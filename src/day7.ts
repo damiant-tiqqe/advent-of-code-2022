@@ -35,7 +35,7 @@ export const run = () => {
     console.log(`----------- Day 7 -----------`);
     const dataRaw = Util.readDataFile('data/day7/input.txt');
 
-    const breadcrumbSeparator: string = '\\';
+    const breadcrumbSeparator: string = '#';
     const simple: FolderDetails[] = [];
     let breadcrumb: string[] = [];
 
@@ -98,7 +98,7 @@ export const run = () => {
     const foldersBigEnoughToFreeSpace = simple.filter(x => x.size >= spaceToFree);
     const sortedForDelete = foldersBigEnoughToFreeSpace.sort((a,b) => { return a.size - b.size });
 
-    console.log(`Part 2: Size of smallest directory to delete to free up space needed '${sortedForDelete[0].name}' ${sortedForDelete[0].size}`);
+    console.log(`Part 2: Size of smallest directory to delete to free up space needed '${sortedForDelete[0].path.substring(1).replaceAll('#','/')}' ${sortedForDelete[0].size}`);
 }
 
 function isChangeDirectoryCommand(element: string) {
