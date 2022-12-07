@@ -3,13 +3,6 @@ import * as Day7 from './day7';
 //import { LineType } from './day7';
 
 describe(`Advent of Code 2022 - Day 7`, async () => {
-    const examples: string[] = [
-        '$ cd /',
-        '$ ls',
-        '187585 dgflmqwt.srm',
-        'dir gnpd',
-        '$ cd ..'
-    ];
 
     it(`should get the type 'command' from a line starting with '$'`, async () => {
         const line: string = '$ cd /';
@@ -54,34 +47,6 @@ describe(`Advent of Code 2022 - Day 7`, async () => {
         assert.deepEqual(result, expected);
     });
 
-    it(`should add a sub folder to a folder when in LS state`, async () => {
-        const input: string = 'dir gnpd';
-        const currentFolder: Day7.Folder = { name: '/', files: [], folders: []} as Day7.Folder;
-        const currentState: Day7.State = Day7.State.ls;
-        const expected = { 
-            name: '/', 
-            files: [], 
-            folders: [{ name: 'gnpd', files:  [], folders: [], parent: currentFolder }]
-        } as Day7.Folder;
-    
-        const result:Day7.Folder = Day7.buildFolder(currentFolder, input, currentState);
-        assert.deepEqual(result, expected);
-    });
-    
-    it(`should add a file to a folder when in LS state`, async () => {
-        const input: string = '187585 dgflmqwt.srm';
-        const currentFolder: Day7.Folder = { name: '/', files: [], folders: []} as Day7.Folder;
-        const currentState: Day7.State = Day7.State.ls;
-        const expected = { 
-            name: '/', 
-            files: [{ name: 'dgflmqwt.srm', size: 187585 }], 
-            folders: []
-        };
-
-        const result:Day7.Folder = Day7.buildFolder(currentFolder, input, currentState);
-        assert.deepEqual(result, expected);
-    });
-
     it(`should change current directory to a subfolder with command 'cd <name>'`, async () => {
         const input: string = '$ cd gnpd';
         const currentFolder = { 
@@ -107,11 +72,6 @@ describe(`Advent of Code 2022 - Day 7`, async () => {
             name: '/', 
             files: [], 
             folders: [{ name: 'gnpd', files:  [], folders: [], parent: undefined }]
-        } as Day7.Folder;
-        const currentFolder = { 
-            name: 'gnpd', 
-            files: [], 
-            folders: [{ name: 'gnpd', files:  [], folders: [], parent: parentFolder }]
         } as Day7.Folder;
         parentFolder.folders.find(x => x.name === 'gnpd').parent = parentFolder;
         const expectedBreadcrumb = ['/'];

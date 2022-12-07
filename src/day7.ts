@@ -155,28 +155,6 @@ export function toDirectory(line: string) {
     return { name: split[1], files: [], folders: [] } as Folder;
 }
 
-export function buildFolder(current: Folder, input: string, state: State): Folder {
-    const newFolder: Folder = {...current};
-
-    if (state !== State.ls) {
-        return newFolder;
-    }
-    
-    const lineType = getLineType(input);
-    switch(lineType as LineType) {
-        case LineType.file:
-            newFolder.files.push(toFile(input));
-            break;
-        case LineType.directory:
-            const subFolder = toDirectory(input);
-            subFolder.parent = current;
-            newFolder.folders.push(subFolder);
-            break;
-        
-    }
-    
-    return newFolder;
-}
 export function changeDirectory(line: string, breadcrumb: string[]) {
     const newbreadcrumb = [... breadcrumb];
 
@@ -205,24 +183,4 @@ export function changeDirectory(line: string, breadcrumb: string[]) {
     return newbreadcrumb;
 }
 
-export function getCommandType(line: string): State {
-
-    const lineType: LineType = getLineType(line);
-
-    if (lineType !== LineType.command) {
-        throw new Error('error');
-    }
-
-    const split = line.split(' ');
-    const cmdType: string = split[1];
-
-    switch(cmdType) {
-        case 'cd':
-            return State.navigate;
-        case 'ls':
-            return State.ls;
-        default:
-            return State.unknown;
-    }
-}
 
