@@ -99,42 +99,29 @@ export function getInstructionFromCommand(input: string): Instruction {
 
 
 export function executeInstruction(instruction: Instruction, cpu: CPU): [CPU, CPU[]] {
-    if (!cpu.registerEnd) {
-        cpu.registerEnd = cpu.registerStart;
-    }
+
     let newCpu: CPU;
+    const registerStart = cpu.registerEnd ?? cpu.registerStart;
+    let registerEnd = registerStart;
     const cpuStates: CPU[] = [];
     for (let i = 0; i < instruction.cycles; i++) {
         // start
-            //const cmd = instruction.instruction;
-            newCpu = { cycle: cpu.cycle + i + 1, registerStart: cpu.registerEnd, registerEnd: cpu.registerEnd } as CPU;
+            const cycle = cpu.cycle + i + 1;
         // during
-        // check for display/recording of register value based on cycle
-            
-        //end
-        // execute the instruction, update the register, if in the last cycle of the instruction
-        if ( i === instruction.cycles - 1) {
-            newCpu.registerEnd = getRegisterValue(instruction, newCpu);
-        }
-        else {
-            newCpu.registerEnd = newCpu.registerStart;
-        }
         
+        //end
+            // execute the instruction, update the register, if in the last cycle of the instruction
+        if ( i === instruction.cycles - 1) {
+            //newCpu.registerEnd = getRegisterValue(instruction, newCpu);
+            //registerEnd = getRegisterValue(instruction, newCpu); 
+            registerEnd = registerStart + (instruction.value ?? 0); 
+        }
+        // create the new cpuState
+        newCpu = { cycle, registerStart, registerEnd };
         cpuStates.push(newCpu);
     }
 
     return [newCpu, cpuStates];
-}
-
-export function getRegisterValue(instruction: Instruction, newCpu: CPU): number {
-    switch(instruction.instruction) {
-        case 'noop':
-            return newCpu.registerStart;
-        case 'addx':
-            return newCpu.registerStart + instruction.value;
-        default:
-            return newCpu.registerStart;
-    }
 }
 
 export function isSpriteVisible(element: CPU, cycleCount: number, rowLength: number): boolean {

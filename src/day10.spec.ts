@@ -17,7 +17,7 @@ describe(`Advent of Code 2022 - Day 10`, async () => {
         Day10.run();
     });
 
-    it.only(`should test run part 1`, async () => {
+    it(`should test run part 1`, async () => {
         const expected = 12980;
         const cyclesToRead: number[] = [
             20,
