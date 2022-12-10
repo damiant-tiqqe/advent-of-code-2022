@@ -85,4 +85,14 @@ describe(`Advent of Code 2022 - Day 7`, async () => {
 
     });
 
+    it(`should create a breadcrumb by traversing 'cd' commands`, async () => {
+        let breadcrumb: string[] = ['/'];
+        const expected: string[] = ['/', 'dir1', 'sub1', 'end'];
+        breadcrumb =  Day7.changeDirectory('$ cd dir1', breadcrumb);
+        breadcrumb =  Day7.changeDirectory('$ cd sub1', breadcrumb);
+        breadcrumb =  Day7.changeDirectory('$ cd end', breadcrumb);
+        
+        assert.deepEqual(breadcrumb, expected);
+    });
+
 });

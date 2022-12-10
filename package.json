@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/hosey/advent-of-code-2022#readme",
   "devDependencies": {
+    "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1",
     "chai": "^4.3.7",
     "lodash": "^4.17.21",

@@ -54,9 +54,18 @@ export const getUniqueStrings = (input: string[]): string[] => {
     return [... new Set(input)];
 }
 
-export const peek = (arr: any[]) => {
+export const peek = (arr: any[]) : any | undefined => {
     if (arr && arr.length) {
         return arr[arr.length - 1];
     }
     return undefined;
+}
+
+export function convertToNumberArray(input: string[]): number[] {
+    if (!input || !input.length) {
+        return undefined;
+    }
+
+    const numbers = input.map(x => parseInt(x));
+    return numbers;
 }
