@@ -24,8 +24,10 @@ export const run = ():void => {
 
     console.log(`Part 1: Total signal strenth: ${totalSignalStrength}`);
 
+    const crtDisplay: string[] = convertRegisterHistoryToCrtDisplay(stateHistory);
 
-    console.log(`Part 2: Total n: ${1}`);
+    console.log(`Part 2:`);
+    displayCrt(crtDisplay);
 
 };
 
@@ -47,15 +49,32 @@ export interface Instruction {
 }
 
 export function part1(dataRaw: string[]): CPU[] {
-    const stateHistory: CPU[] = [];
-    let currentCpu: CPU = { registerStart: 1, cycle: 0, registerEnd: 1 };
+
+    const instructions = convertRawDataToInstructions(dataRaw);
+    const stateHistory: CPU[] = executeAllInstructions(instructions);
+    return stateHistory;
+}
+
+export const convertRawDataToInstructions = (dataRaw: string[]): Instruction[] => {
+    const instructions: Instruction[] = [];
+    
     for (let i = 0; i < dataRaw.length; i++) {
         const instructionRaw = dataRaw[i];
         if (!instructionRaw || instructionRaw.length === 0) {
             continue;
         }
         const instruction = getInstructionFromCommand(instructionRaw);
-        
+        instructions.push(instruction);
+    }
+    return instructions;
+
+}
+
+export function executeAllInstructions(instructions: Instruction[]) {
+    const stateHistory: CPU[] = [];
+    let currentCpu: CPU = { registerStart: 1, cycle: 0, registerEnd: 1 };
+    for (let i = 0; i < instructions.length; i++) {
+        const instruction = instructions[i];
         const [result, states] = executeInstruction(instruction, currentCpu);
         currentCpu = result;
         stateHistory.push(...states);
@@ -116,4 +135,36 @@ export function getRegisterValue(instruction: Instruction, newCpu: CPU): number 
         default:
             return newCpu.registerStart;
     }
+}
+
+export function isSpriteVisible(element: CPU, cycleCount: number, rowLength: number): boolean {
+    const rowPosition = cycleCount % rowLength;
+    return rowPosition >= element.registerStart - 1 && rowPosition <= element.registerStart + 1;
+}
+
+export const displayCrt = (crtDisplay: string[]): void => {
+    for (let i = 0; i < crtDisplay.length; i++) {
+        const row = crtDisplay[i];
+        console.log(`${row}`);
+    }
+}
+
+export const convertRegisterHistoryToCrtDisplay = (stateHistory: CPU[]): string[] => {
+    const crtDisplay: string[] = [];
+    const rowLength: number = 40;
+    let currentRow: string[] = []
+    for (let cycleIndex = 0; cycleIndex < stateHistory.length; cycleIndex++) {
+        if (cycleIndex % rowLength === 0) {
+            if (cycleIndex > 0) {
+                crtDisplay.push(currentRow.join(''));
+            }
+            currentRow = [];
+        }
+        const element = stateHistory[cycleIndex];        
+        const isVisible: boolean = isSpriteVisible(element, cycleIndex, rowLength);
+        currentRow.push(isVisible ? '#' : '.');
+    }
+    crtDisplay.push(currentRow.join(''));
+
+    return crtDisplay;
 }
