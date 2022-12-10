@@ -53,16 +53,14 @@ export function convertRowToTrees(input: number[], row: number): Tree[] {
     for (let i = 0; i < input.length; i++) {
         const height = input[i];
         const id = (input.length * row) + i;
-        trees.push({ row, col: i, id, height } as Tree);
+        trees.push({ row, col: i, id, height, score: 0 } as Tree);
     }
 
     return trees;
 }
 
 export function getVisibleMap(input: Tree[], width: number, height: number): boolean[] {
-    const visibleMap: boolean[] = [];
-
-    return input.map(x =>  isOnEdge(x, width, height) || isVisibleOnRow(x, input, width, height) || isVisibleOnCol(x, input, width, height));
+    return input.map(x =>  isOnEdge(x, width, height) || isVisibleOnRow(x, input) || isVisibleOnCol(x, input));
 }
 
 export const isOnEdge = (tree:Tree, width: number, height: number): boolean => {
@@ -70,14 +68,14 @@ export const isOnEdge = (tree:Tree, width: number, height: number): boolean => {
     return (tree.col === 0 || tree.col === height - 1 || tree.row === 0 || tree.row === width - 1);
 }
 
-export const isVisibleOnRow = (tree:Tree, input: Tree[], width: number, height: number): boolean => {
+export const isVisibleOnRow = (tree:Tree, input: Tree[]): boolean => {
     const isVisibleOnLeft = !input.some(x => x.row === tree.row && x.col < tree.col && x.height >= tree.height);
     const isVisibleOnRight = !input.some(x => x.row === tree.row && x.col > tree.col && x.height >= tree.height);
 
     return isVisibleOnLeft || isVisibleOnRight;
 }
 
-export const isVisibleOnCol = (tree:Tree, input: Tree[], width: number, height: number): boolean => {
+export const isVisibleOnCol = (tree:Tree, input: Tree[]): boolean => {
     const isVisibleAbove = !input.some(x => x.row < tree.row && x.col === tree.col && x.height >= tree.height);
     const isVisibleBelow = !input.some(x => x.row > tree.row && x.col === tree.col && x.height >= tree.height);
 

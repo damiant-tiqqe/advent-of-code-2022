@@ -105,7 +105,7 @@ describe(`Advent of Code 2022 - Day 9`, async () => {
     it(`should get a horizontal move vector towards an object +ve horiz, +ve vert`, async () => {
         const targetPos: Day9.Position = {x: 2, y: 1};
         const currentPos: Day9.Position = {x: 0, y: 0};
-        const expected: Day9.Position = {x: 1, y: 0};
+        const expected: Day9.Position = {x: 1, y: 1};
         const result: Day9.Position = Day9.getMove(currentPos, targetPos);
         assert.deepEqual(result, expected);
     });
@@ -114,7 +114,7 @@ describe(`Advent of Code 2022 - Day 9`, async () => {
     it(`should get a horizontal move vector towards an object -ve horiz, +ve vert`, async () => {
         const targetPos: Day9.Position = {x: -2, y: 1};
         const currentPos: Day9.Position = {x: 0, y: 0};
-        const expected: Day9.Position = {x: -1, y: 0};
+        const expected: Day9.Position = {x: -1, y: 1};
         const result: Day9.Position = Day9.getMove(currentPos, targetPos);
         assert.deepEqual(result, expected);
     });
@@ -122,7 +122,7 @@ describe(`Advent of Code 2022 - Day 9`, async () => {
     it(`should get a horizontal move vector towards an object +ve horiz, -ve vert`, async () => {
         const targetPos: Day9.Position = {x: 2, y: -1};
         const currentPos: Day9.Position = {x: 0, y: 0};
-        const expected: Day9.Position = {x: 1, y: 0};
+        const expected: Day9.Position = {x: 1, y: -1};
         const result: Day9.Position = Day9.getMove(currentPos, targetPos);
         assert.deepEqual(result, expected);
     });
@@ -131,7 +131,7 @@ describe(`Advent of Code 2022 - Day 9`, async () => {
     it(`should get a horizontal move vector towards an object -ve horiz, -ve vert`, async () => {
         const targetPos: Day9.Position = {x: -2, y: -1};
         const currentPos: Day9.Position = {x: 0, y: 0};
-        const expected: Day9.Position = {x: -1, y: 0};
+        const expected: Day9.Position = {x: -1, y: -1};
         const result: Day9.Position = Day9.getMove(currentPos, targetPos);
         assert.deepEqual(result, expected);
     });
@@ -142,7 +142,7 @@ describe(`Advent of Code 2022 - Day 9`, async () => {
     it(`should get a vertical move vector towards an object +ve horiz, +ve vert`, async () => {
         const targetPos: Day9.Position = {x: 1, y: 2};
         const currentPos: Day9.Position = {x: 0, y: 0};
-        const expected: Day9.Position = {x: 0, y: 1};
+        const expected: Day9.Position = {x: 1, y: 1};
         const result: Day9.Position = Day9.getMove(currentPos, targetPos);
         assert.deepEqual(result, expected);
     });
@@ -151,7 +151,7 @@ describe(`Advent of Code 2022 - Day 9`, async () => {
     it(`should get a vertical move vector towards an object -ve horiz, +ve vert`, async () => {
         const targetPos: Day9.Position = {x: 1, y: -2};
         const currentPos: Day9.Position = {x: 0, y: 0};
-        const expected: Day9.Position = {x: 0, y: -1};
+        const expected: Day9.Position = {x: 1, y: -1};
         const result: Day9.Position = Day9.getMove(currentPos, targetPos);
         assert.deepEqual(result, expected);
     });
@@ -159,7 +159,7 @@ describe(`Advent of Code 2022 - Day 9`, async () => {
     it(`should get a vertical move vector towards an object +ve horiz, -ve vert`, async () => {
         const targetPos: Day9.Position = {x: -1, y: 2};
         const currentPos: Day9.Position = {x: 0, y: 0};
-        const expected: Day9.Position = {x: 0, y: 1};
+        const expected: Day9.Position = {x: -1, y: 1};
         const result: Day9.Position = Day9.getMove(currentPos, targetPos);
         assert.deepEqual(result, expected);
     });
@@ -168,7 +168,7 @@ describe(`Advent of Code 2022 - Day 9`, async () => {
     it(`should get a vertical move vector towards an object -ve horiz, -ve vert`, async () => {
         const targetPos: Day9.Position = {x: -1, y: -2};
         const currentPos: Day9.Position = {x: 0, y: 0};
-        const expected: Day9.Position = {x: 0, y: -1};
+        const expected: Day9.Position = {x: -1, y: -1};
         const result: Day9.Position = Day9.getMove(currentPos, targetPos);
         assert.deepEqual(result, expected);
     });
@@ -362,5 +362,6 @@ describe(`Advent of Code 2022 - Day 9`, async () => {
         ];
 
         const result = Day9.part2(rawData, true);
+        assert.exists(result);
     });
 });

@@ -107,7 +107,7 @@ describe(`Advent of Code 2022 - Day 8`, async () => {
         ];
         const expected = true;
     
-        const result = Day8.isVisibleOnRow(array[1], array, 3, 3);
+        const result = Day8.isVisibleOnRow(array[1], array);
         assert.equal(result, expected);       
     });
 
@@ -121,7 +121,7 @@ describe(`Advent of Code 2022 - Day 8`, async () => {
         ];
         const expected = false;
     
-        const result = Day8.isVisibleOnRow(array[1], array, 3, 3);
+        const result = Day8.isVisibleOnRow(array[1], array);
         assert.equal(result, expected);       
     });
 
@@ -134,7 +134,7 @@ describe(`Advent of Code 2022 - Day 8`, async () => {
         ];
         const expected = true;
     
-        const result = Day8.isVisibleOnCol(array[1], array, 3, 3);
+        const result = Day8.isVisibleOnCol(array[1], array);
         assert.equal(result, expected);       
     });
 
@@ -148,7 +148,7 @@ describe(`Advent of Code 2022 - Day 8`, async () => {
         ];
         const expected = false;
     
-        const result = Day8.isVisibleOnCol(array[1], array, 3, 3);
+        const result = Day8.isVisibleOnCol(array[1], array);
         assert.equal(result, expected);       
     });
 
@@ -372,8 +372,6 @@ describe(`Advent of Code 2022 - Day 8`, async () => {
     });
 
     it(`should get scenic scores in 5x5 grid `, async () => {
-        const width: number = 3;
-        const height: number= 3;
         const trees: Day8.Tree[] = [
             { row: 0, col: 0, id: 0, height: 1, score: 0 }, 
             { row: 0, col: 1, id: 1, height: 1, score: 0 }, 
@@ -440,8 +438,6 @@ describe(`Advent of Code 2022 - Day 8`, async () => {
     });
 
     it(`should get highest score of 16`, async () => {
-        const width: number = 3;
-        const height: number= 3;
         const trees: Day8.Tree[] = [
             { row: 0, col: 0, id: 0, height: 1, score: 0 }, 
             { row: 0, col: 1, id: 1, height: 1, score: 0 }, 
