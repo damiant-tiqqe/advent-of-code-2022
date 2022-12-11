@@ -13,3 +13,9 @@ export const run = ():void => {
 
 
 };
+
+export function reduceWorryLevel(worryLevel: number) {
+    // bitwise OR to round "down" to the nearest integer value
+    // Note: rounds towards 0. Math.floor() rounds towards negative infinity
+    return (worryLevel / 3) | 0;
+}
